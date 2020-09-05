@@ -1,3 +1,3 @@
 # BLOGGS
 
-Building a blogging app in express with aws dynamoDB
+Building a simple blogging app in express with aws dynamoDB

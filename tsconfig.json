@@ -2,6 +2,7 @@
     "extends": "@tsconfig/node12/tsconfig.json",
     "compilerOptions": {
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "strict": false
     }
 }

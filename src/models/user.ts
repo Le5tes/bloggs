@@ -1,12 +1,14 @@
+import { table, hashKey, attribute } from '@aws/dynamodb-data-mapper-annotations';
 const bcrypt = require('bcrypt');
 const config = require('../../config/config');
-import { table } from '@aws/dynamodb-data-mapper-annotations';
 
 @table('users')
 export class User {
     static passwordHasher = bcrypt;
 
+    @hashKey()
     username: string;
+    @attribute()
     passwordHash: string;
     
     static async create(username, password) {

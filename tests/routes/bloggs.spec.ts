@@ -3,23 +3,16 @@ import {default as request} from 'supertest';
 
 describe('/bloggs', () => {
     describe('GET /bloggs', () => {
-        it('should be callable', () => {
-            request(server).get('/bloggs')
-            .end((err, res) => {
-                expect(err).not.toBeTruthy();
-                expect(res.status).toEqual(200);
-            });
-        });
+        it('should be callable', async() => {
+            const res = await request(server).get('/bloggs')
+            expect(res.status).toEqual(200);
+        }, 10000);
     });
 
     describe('POST /bloggs', () => {
-        it('should be callable', () => {
-            request(server).post('/bloggs')
-            .send()
-            .end((err, res) => {
-                expect(err).not.toBeTruthy();
-                expect(res.status).toEqual(200);
-            });
-        });
+        it('should be callable', async () => {
+            const res = await request(server).post('/bloggs').send()
+            expect(res.status).toEqual(200);
+        }, 10000);
     });
 });

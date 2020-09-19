@@ -20,10 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({
-  store: new DynamoDBStore(),
-  secret: 'CHANGEME'
-}))
+// TODO implement sessions
+// app.use(session({
+//   store: new DynamoDBStore(),
+//   secret: 'CHANGEME'
+// }))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

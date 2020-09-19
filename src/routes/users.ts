@@ -1,5 +1,6 @@
 import { userValidations } from "../validations/validations";
 import { UsersService } from "../services/users-service";
+import {dataMapper} from '../datamapper'
 
 var service = new UsersService(dataMapper);
 

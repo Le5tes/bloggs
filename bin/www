@@ -29,7 +29,7 @@ if (cluster.isMaster) {
    * Module dependencies.
    */
 
-  var app = require('../src/app');
+  var app = require('../dist/app');
   var debug = require('debug')('bloggs:server');
   var http = require('http');
 

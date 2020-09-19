@@ -2,7 +2,10 @@
   "name": "bloggs",
   "version": "0.0.0",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
     "start": "node ./bin/www",
     "start_database": "sh tests/scripts/start_local_database.sh",
     "test": "jest"

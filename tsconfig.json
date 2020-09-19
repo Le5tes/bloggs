@@ -3,6 +3,10 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "strict": false
-    }
+        "strict": false,
+        "outDir": "dist",
+    },
+    "include": [
+        "src/**/*"
+    ]
 }

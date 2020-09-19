@@ -1,5 +1,5 @@
 import { table, hashKey, attribute } from '@aws/dynamodb-data-mapper-annotations';
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const config = require('../../config/config');
 
 @table('users')

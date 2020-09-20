@@ -4,9 +4,5 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strict": false,
-        "outDir": "dist",
-    },
-    "include": [
-        "src/**/*"
-    ]
+    }
 }

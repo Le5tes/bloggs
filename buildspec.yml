@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            nodejs: 12
+        commands: 
+            - npm i -g typescript
+            - npm i
+    pre_build:
+        commands: 
+            - echo "run tests"
+            - npm test
+    build:
+        commands:
+            - echo "build"
+            - npm run build
+
+artifacts:
+    files:
+        - "**/*"

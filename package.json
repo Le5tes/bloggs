@@ -4,9 +4,9 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "./node_modules/typescript/bin/tsc",
-    "prestart": "npm run build",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node ./bin/www",
+    "start-local": "node ./bin/www_local.js",
     "start_database": "sh tests/scripts/start_local_database.sh",
     "test": "jest"
   },
@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "connect-dynamodb": "^2.0.4",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.1",
@@ -31,5 +32,12 @@
     "supertest": "^4.0.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.spec.json"
+      }
+    }
   }
 }

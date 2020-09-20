@@ -7,13 +7,16 @@ var logger = require('morgan');
 var session = require('express-session');
 var DynamoDBStore = require('connect-dynamodb')(session);
 
-
+var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var bloggsRouter = require('./routes/bloggs');
 
 var app = express();
+
+// TODO set some cors
+app.use(cors())
 
 app.use(logger('dev'));
 app.use(express.json());

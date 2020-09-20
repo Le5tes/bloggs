@@ -13,13 +13,18 @@ describe('UsersService', () => {
         service = new UsersService(datamapper);
     });
 
+    const mockAsyncIterator = {
+        [Symbol.asyncIterator]:  async function*() {
+        }
+    }
+
     it('should be created', () => {
         expect(service).toBeTruthy();
     });
 
     describe('createUser', () => {
         beforeEach(() => {
-            datamapper.query.mockImplementation(() => []);
+            datamapper.query.mockImplementation(() => mockAsyncIterator);
             stubPasswordHasher = jest.spyOn(User.passwordHasher, 'hash').mockImplementation(() => 'hashhhh');
             stubPasswordCompare = jest.spyOn(User.passwordHasher, 'compare').mockImplementation(() => true);
         });
@@ -31,7 +36,7 @@ describe('UsersService', () => {
         });
 
         it('should throw an error if the username is already taken', async() => {
-            datamapper.query.mockImplementation(() => [User.create('Bob', '1278987654')]);
+            datamapper.query.mockImplementation(() => ({next: () => User.create('Bob', '1278987654').then((val) => ({value: val, done: true}))}));
 
             await expect(() => service.createUser('Bob', 'Pas5w0rd')).rejects.toThrow();
         });

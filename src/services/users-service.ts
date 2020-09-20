@@ -5,7 +5,10 @@ export class UsersService {
     }
 
     async createUser(username: string, password: string) {
-        const users = await Promise.all( this.datamapper.query(User, {username: username}));
+        const users = []
+        for await ( let user of this.datamapper.query(User, {username: username})) {
+            users.push(user);
+        };
         console.log(users);
         if (users.length > 0) {
             console.log('here');

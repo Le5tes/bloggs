@@ -1,5 +1,6 @@
 import { UsersService } from "../../src/services/users-service";
 import { User } from "../../src/models/user";
+import { mockAsyncIterator } from "../../src/utils/mock-datamapper";
 
 describe('UsersService', () => {
     let service;
@@ -8,15 +9,11 @@ describe('UsersService', () => {
     let stubPasswordCompare;
 
     beforeEach(() => {
-        datamapper = {get: jest.fn(), put: jest.fn(), query: jest.fn()};
+        datamapper = {get: jest.fn(), put: jest.fn(), query: jest.fn(), ensureTableExists: jest.fn()};
 
         service = new UsersService(datamapper);
     });
 
-    const mockAsyncIterator = {
-        [Symbol.asyncIterator]:  async function*() {
-        }
-    }
 
     it('should be created', () => {
         expect(service).toBeTruthy();
@@ -25,8 +22,15 @@ describe('UsersService', () => {
     describe('createUser', () => {
         beforeEach(() => {
             datamapper.query.mockImplementation(() => mockAsyncIterator);
+            datamapper.ensureTableExists.mockImplementation(() => new Promise(res => res()));
             stubPasswordHasher = jest.spyOn(User.passwordHasher, 'hash').mockImplementation(() => 'hashhhh');
             stubPasswordCompare = jest.spyOn(User.passwordHasher, 'compare').mockImplementation(() => true);
+        });
+
+        it('should ensure the users table exists first', async () => {
+            await service.createUser('Bob', 'Pas5w0rd');
+            
+            expect(datamapper.ensureTableExists).toHaveBeenCalledWith(User);
         });
 
         it('should make a call with the username to check that there isn\'t already a user with the username', async () => {

@@ -8,7 +8,7 @@ describe('/users', () => {
     })
 
     describe('POST /users', () => {
-        it.skip('should be return 200 for valid request', async() => {
+        it('should be return 200 for valid request', async() => {
             const res = await app.post('/users')
                 .send({
                     username: "bob",

@@ -30,7 +30,7 @@ describe('UsersService', () => {
         it('should ensure the users table exists first', async () => {
             await service.createUser('Bob', 'Pas5w0rd');
             
-            expect(datamapper.ensureTableExists).toHaveBeenCalledWith(User);
+            expect(datamapper.ensureTableExists).toHaveBeenCalledWith(User, {"readCapacityUnits": 5, "writeCapacityUnits": 5});
         });
 
         it('should make a call with the username to check that there isn\'t already a user with the username', async () => {

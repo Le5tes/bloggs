@@ -5,15 +5,14 @@ export class UsersService {
     }
     
     async createUser(username: string, password: string) {
-        await this.datamapper.ensureTableExists(User);
+        await this.datamapper.ensureTableExists(User, {readCapacityUnits: 5, writeCapacityUnits: 5});
 
         const users = []
         for await ( let user of this.datamapper.query(User, {username: username})) {
             users.push(user);
         };
-        console.log(users);
+
         if (users.length > 0) {
-            console.log('here');
             throw createError(409, 'Username already taken')
         }
 

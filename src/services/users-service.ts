@@ -1,4 +1,5 @@
 import { User } from "../models/user";
+var createError = require('http-errors');
 
 export class UsersService {
     constructor(private datamapper) {

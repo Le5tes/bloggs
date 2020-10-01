@@ -4,20 +4,22 @@ import {dataMapper} from '../datamapper'
 import { UsersController } from "../controllers/users-controller";
 import { checkMoreUsersAllowed } from "../middlewares/usersLimit/usersLimit";
 
-const service = new UsersService(dataMapper);
-const controller = new UsersController(service);
+export const getUsersRoutes = async () => {
+  const service = await UsersService.create(dataMapper);
+  const controller = new UsersController(service);
 
-var express = require('express');
-var router = express.Router();
+  var express = require('express');
+  var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+  router.get('/', function(req, res, next) {
+    res.send('respond with a resource');
+  });
 
-router.post('/', checkMoreUsersAllowed, userValidations(), controller.postUser);
+  router.post('/', checkMoreUsersAllowed, userValidations(), controller.postUser);
 
-router.post('/login', controller.login);
+  router.post('/login', controller.login);
 
-router.get('/logout', controller.logout);
+  router.get('/logout', controller.logout);
 
-module.exports = router;
+  return router;
+}

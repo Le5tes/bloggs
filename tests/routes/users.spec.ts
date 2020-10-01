@@ -1,9 +1,11 @@
-var server = require('../../src/app')
 import {default as request} from 'supertest';
+import { getApp } from '../../src/app';
 
 describe('/users', () => {
     let app;
-    beforeEach(() => {
+    let server;
+    beforeEach(async() => {
+        server = await getApp();
         app = request(server)
     })
 

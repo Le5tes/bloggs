@@ -10,40 +10,45 @@ var DynamoDBStore = require('connect-dynamodb')(session);
 var cors = require('cors')
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var bloggsRouter = require('./routes/bloggs');
+import { getUsersRoutes } from "./routes/users";
+import { getBloggsRoutes } from "./routes/bloggs";
 
-var app = express();
 
-// TODO set some cors
-app.use(cors())
+export const getApp = async () => {
+  var app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+  // TODO set some cors
+  app.use(cors())
 
-app.use(session({
-  // store: new DynamoDBStore(),
-  secret: 'CHANGEME'
-}))
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/bloggs', bloggsRouter);
+  app.use(session({
+    // store: new DynamoDBStore(),
+    secret: 'CHANGEME'
+  }))
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+  const [usersRoutes, bloggsRoutes] = await Promise.all([getUsersRoutes(), getBloggsRoutes()]);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  app.use('/', indexRouter);
+  app.use('/users', usersRoutes);
+  app.use('/bloggs', bloggsRoutes);
 
-  res.status(err.status || 500);
-});
+  // catch 404 and forward to error handler
+  app.use(function(req, res, next) {
+    next(createError(404));
+  });
 
-module.exports = app;
+  // error handler
+  app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    res.status(err.status || 500);
+  });
+
+  return app;
+}

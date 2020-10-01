@@ -1,12 +1,22 @@
-var express = require('express');
-var router = express.Router();
+import { checkSignIn } from "../middlewares/checkSignIn/checkSignIn";
+import { BloggsService } from "../services/bloggs-service";
+import { dataMapper } from "../datamapper";
+import { BloggsController } from "../controllers/bloggs-controller";
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+export const getBloggsRoutes = async () => {
+  const service = await BloggsService.create(dataMapper);
+  const controller = new BloggsController(service);
 
-router.post('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+  var express = require('express');
+  var router = express.Router();
 
-module.exports = router;
+  router.get('/', function(req, res, next) {
+    res.send('respond with a resource');
+  });
+
+  router.post('/', function(req, res, next) {
+    res.send('respond with a resource');
+  });
+
+  return router;
+}

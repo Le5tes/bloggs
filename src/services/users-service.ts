@@ -20,4 +20,16 @@ export class UsersService {
 
         await this.datamapper.put(user);
     }
+
+    async login(username: string, password: string) {
+        try {
+            const user: User = await this.datamapper.get(User, {username: username});
+
+            if (user.authenticate(password)) {
+                return user;
+            }
+        } catch  {}
+        
+        throw createError(401, 'Authorisation failed');
+    }
 }

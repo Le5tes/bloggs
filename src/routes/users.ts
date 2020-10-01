@@ -1,8 +1,10 @@
-import { userValidations } from "../validations/validations";
+import { userValidations } from "../middlewares/validations/validations";
 import { UsersService } from "../services/users-service";
 import {dataMapper} from '../datamapper'
+import { UsersController } from "../controllers/users-controller";
 
-var service = new UsersService(dataMapper);
+const service = new UsersService(dataMapper);
+const controller = new UsersController(service);
 
 var express = require('express');
 var router = express.Router();
@@ -11,15 +13,10 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/', userValidations(), async function(req, res, next) {
-  await service.createUser(req.body.username, req.body.password);
+router.post('/', userValidations(), controller.postUser);
 
-  res.status(201).send();
-});
+router.post('/login', controller.login);
 
-router.post('/login', function(req, res, next) {
-
-  res.send('respond with a resource');
-});
+router.get('/logout', controller.logout);
 
 module.exports = router;

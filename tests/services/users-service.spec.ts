@@ -23,8 +23,8 @@ describe('UsersService', () => {
         beforeEach(() => {
             datamapper.query.mockImplementation(() => mockAsyncIterator);
             datamapper.ensureTableExists.mockImplementation(() => new Promise(res => res()));
-            stubPasswordHasher = jest.spyOn(User.passwordHasher, 'hash').mockImplementation(() => 'hashhhh');
-            stubPasswordCompare = jest.spyOn(User.passwordHasher, 'compare').mockImplementation(() => true);
+            stubPasswordHasher = jest.spyOn(User.passwordHasher, 'hash').mockImplementation(() => Promise.resolve('hashhhh'));
+            stubPasswordCompare = jest.spyOn(User.passwordHasher, 'compare').mockImplementation(() => Promise.resolve(true));
         });
 
         it('should ensure the users table exists first', async () => {
@@ -49,6 +49,37 @@ describe('UsersService', () => {
             await service.createUser('Bob', 'Pas5w0rd');
 
             expect(datamapper.put).toHaveBeenCalled();
+        });
+    });
+
+    describe('login', () => {
+        let user;
+        beforeEach(() => {
+            user = new User();
+            datamapper.get.mockImplementation(() => Promise.resolve(user))
+        });
+
+        it('should make a call to the database to get the user', async() => {
+            await service.login('Bob', 'Password');
+
+            expect(datamapper.get).toHaveBeenCalled();
+        });
+
+        it('should return the user if the user sucessfully authenticates',  async() => {
+            const result = await service.login('Bob', 'Password');
+            expect(result).toEqual(user);
+        });
+        
+        it('should throw an error if the user doesn\'t exist', async() => {
+            datamapper.get.mockImplementation(() => Promise.reject())
+            
+            expect(() => service.login('Bob', 'Password')).rejects.toThrow();
+        });
+
+        it('should throw an error if the user\'s password doesn\'t match', () => {
+            stubPasswordCompare.mockImplementation(() => Promise.resolve(false));
+
+            expect(() => service.login('Bob', 'Password')).rejects.toThrow();
         });
     });
 });

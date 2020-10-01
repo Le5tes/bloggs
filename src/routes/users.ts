@@ -2,6 +2,7 @@ import { userValidations } from "../middlewares/validations/validations";
 import { UsersService } from "../services/users-service";
 import {dataMapper} from '../datamapper'
 import { UsersController } from "../controllers/users-controller";
+import { checkMoreUsersAllowed } from "../middlewares/usersLimit/usersLimit";
 
 const service = new UsersService(dataMapper);
 const controller = new UsersController(service);
@@ -13,7 +14,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/', userValidations(), controller.postUser);
+router.post('/', checkMoreUsersAllowed, userValidations(), controller.postUser);
 
 router.post('/login', controller.login);
 

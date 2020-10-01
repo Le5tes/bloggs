@@ -3,10 +3,14 @@ import { User } from "../models/user";
 export class UsersService {
     constructor(private datamapper) {
     }
+
+    static async create(datamapper) {
+        await datamapper.ensureTableExists(User, {readCapacityUnits: 5, writeCapacityUnits: 5});
+
+        return new UsersService(datamapper);
+    }
     
     async createUser(username: string, password: string) {
-        await this.datamapper.ensureTableExists(User, {readCapacityUnits: 5, writeCapacityUnits: 5});
-
         await this.checkUsernameNotTaken(username);
 
         const user = await User.create(username, password)

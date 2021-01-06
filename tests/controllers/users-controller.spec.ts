@@ -72,6 +72,16 @@ describe('UsersController', () => {
         });
     });
 
+    describe('getCurrentUser', () => {
+        it('should set res status as 200 and send username when user is logged in', () => {
+            mockReq = {session: {user: {username: 'Tim'}}}
+            controller.getCurrentUser(mockReq, mockRes);
+
+            expect(mockRes.status).toHaveBeenCalledWith(200);
+            expect(mockRes.send).toHaveBeenCalledWith({user: 'Tim'});
+        });
+    });
+
     describe('logout', () => {
         it('should destroy the session', () => {
             controller.logout(mockReq, mockRes);

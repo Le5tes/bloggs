@@ -15,6 +15,10 @@ export class UsersController {
         res.status(200).send();
     }
 
+    getCurrentUser = (req, res) => {
+        res.status(200).send({user: req.session.user.username});
+    }
+
     logout = (req, res) => {
         req.session.destroy();
 

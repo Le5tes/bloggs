@@ -8,7 +8,7 @@ describe('/users', () => {
     let server;
     beforeEach(async() => {
         server = await getApp();
-        app = request(server)
+        app = request(server);
     });
 
     describe('GET /users', () => {

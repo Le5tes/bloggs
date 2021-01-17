@@ -11,7 +11,7 @@ export class UsersController {
 
     login = async (req, res) => {
         req.session.user = await this.service.login(req.body.username, req.body.password);
-  
+
         res.status(200).send();
     }
 
@@ -23,5 +23,5 @@ export class UsersController {
         req.session.destroy();
 
         res.status(200).send();
-    } 
+    }
 }

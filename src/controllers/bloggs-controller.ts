@@ -8,4 +8,11 @@ export class BloggsController {
 
         res.status(201).send();
     }
+
+    getBloggs = async (req, res) => {
+        const limit = req.query.limit || 1;
+        const bloggs = await this.service.getBloggs(limit);
+
+        res.status(200).send(bloggs);
+    }
 }

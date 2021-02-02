@@ -1,4 +1,4 @@
-import { mockDataMapper } from "./utils/mock-datamapper";
+import { mockDataMapper } from "../utils/mock-datamapper";
 
 var DataMapper = require('@aws/dynamodb-data-mapper').DataMapper;
 var DynamoDB = require('aws-sdk/clients/dynamodb');

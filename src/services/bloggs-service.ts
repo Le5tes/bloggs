@@ -14,20 +14,20 @@ export class BloggsService {
     }
 
     async createBlogg (username, blog) {
-        this.logger.info('creating blogg')
+        this.logger.info('creating blogg');
         const blogg = new Blogg();
         blogg.username = username;
         blogg.body = blog;
 
         await this.datamapper.put(blogg);
-        this.logger.info('blogg created')
+        this.logger.info('blogg created');
     }
 
     async getBloggs (number) {
-        this.logger.info('getting bloggs')
+        this.logger.info('getting bloggs');
 
         const bloggs = []
-        for await ( const blogg of this.datamapper.query(Blogg, { limit: number, scanIndexForward: true })) {
+        for await (const blogg of this.datamapper.query(Blogg, { limit: number, scanIndexForward: true })) {
             bloggs.push(blogg);
         };
 

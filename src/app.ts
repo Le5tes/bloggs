@@ -5,13 +5,13 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-var DynamoDBStore = require('connect-dynamodb')(session);
 
 var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 import { getUsersRoutes } from "./routes/users";
 import { getBloggsRoutes } from "./routes/bloggs";
+import { sessionOptions } from "./configs/sessionOptions";
 
 
 export const getApp = async () => {
@@ -25,10 +25,7 @@ export const getApp = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
-  app.use(session({
-    // store: new DynamoDBStore(),
-    secret: 'CHANGEME'
-  }))
+  app.use(session(sessionOptions));
 
   const [usersRoutes, bloggsRoutes] = await Promise.all([getUsersRoutes(), getBloggsRoutes()]);
 

@@ -4,8 +4,8 @@ var createError = require('http-errors');
 
 export class UsersService {
     private logger = new Logger('UsersService');
-    constructor(private datamapper) {
-    }
+    
+    constructor(private datamapper) {}
 
     static async create(datamapper) {
         await datamapper.ensureTableExists(User, {readCapacityUnits: 5, writeCapacityUnits: 5});
@@ -17,26 +17,26 @@ export class UsersService {
         this.logger.info('creating user')
         await this.checkUsernameNotTaken(username);
 
-        const user = await User.create(username, password)
+        const user = await User.create(username, password);
         
         await this.datamapper.put(user);
-        this.logger.info('user created')
+        this.logger.info('user created');
     }
     
     async login(username: string, password: string) {
-        this.logger.info('starting login')
+        this.logger.info('starting login');
         try {
-            const user: User = await this.datamapper.get(User, {username: username});
+            const user: User = await this.datamapper.get(Object.assign(new User, {username: username}));
             
             if (user.authenticate(password)) {
-                this.logger.info('returning user')
+                this.logger.info('returning user');
                 return user;
             }
         } catch (err) {
-            this.logger.error('login failed', err)
+            this.logger.error('login failed', err);
         }
         
-        this.logger.info('Authorisation failed')
+        this.logger.info('Authorisation failed');
         throw createError(401, 'Authorisation failed');
     }
 
@@ -47,7 +47,7 @@ export class UsersService {
         }
 
         if (users.length > 0) {
-            this.logger.info('Username already taken')
+            this.logger.info('Username already taken');
             throw createError(409, 'Username already taken');
         }
     }

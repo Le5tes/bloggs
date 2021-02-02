@@ -1,6 +1,6 @@
 import { userValidations } from "../middlewares/validations/validations";
 import { UsersService } from "../services/users-service";
-import {dataMapper} from '../datamapper'
+import {dataMapper} from '../configs/datamapper'
 import { UsersController } from "../controllers/users-controller";
 import { checkMoreUsersAllowed } from "../middlewares/usersLimit/usersLimit";
 import { checkSignIn } from "../middlewares/checkSignIn/checkSignIn";

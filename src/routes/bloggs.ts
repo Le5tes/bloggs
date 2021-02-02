@@ -1,6 +1,6 @@
 import { checkSignIn } from "../middlewares/checkSignIn/checkSignIn";
 import { BloggsService } from "../services/bloggs-service";
-import { dataMapper } from "../datamapper";
+import { dataMapper } from "../configs/datamapper";
 import { BloggsController } from "../controllers/bloggs-controller";
 
 export const getBloggsRoutes = async () => {

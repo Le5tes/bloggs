@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node ./bin/www",
-    "start-local": "node ./bin/www_local.js",
+    "start-local": "LOCALENV=true node ./bin/www_local.js",
     "start_database": "sh tests/scripts/start_local_database.sh",
+    "local-app": "sh tests/scripts/start_local_app.sh",
     "test": "jest"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-async-handler": "^1.1.4",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
     "http-errors": "~1.6.3",

@@ -8,7 +8,26 @@ export class BloggsService {
     constructor(private datamapper: DataMapper) {}
 
     static async create(datamapper) {
-        await datamapper.ensureTableExists(Blogg,  {readCapacityUnits: 5, writeCapacityUnits: 5});
+        const bloggTableOptions = {
+            readCapacityUnits: 5,
+            writeCapacityUnits: 5,
+            indexOptions: {
+                globalKey: {
+                    type: 'global',
+                    projection: 'all',
+                    readCapacityUnits: 5,
+                    writeCapacityUnits: 5,
+                },
+                username: {
+                    type: 'global',
+                    projection: 'all',
+                    readCapacityUnits: 5,
+                    writeCapacityUnits: 5,
+                }
+            }
+        }
+
+        await datamapper.ensureTableExists(Blogg,  bloggTableOptions);
 
         return new BloggsService(datamapper);
     }
@@ -27,9 +46,13 @@ export class BloggsService {
         this.logger.info('getting bloggs');
 
         const bloggs = []
-        for await (const blogg of this.datamapper.query(Blogg, { limit: number, scanIndexForward: true })) {
-            bloggs.push(blogg);
-        };
+        try {
+            for await (const blogg of this.datamapper.query(Blogg, {globalKey: 0}, {indexName: 'globalKey', limit: number, scanIndexForward: true })) {
+                bloggs.push(blogg);
+            };
+        } catch (err) {
+            this.logger.error('failed to get bloggs', err)
+        }
 
         this.logger.info('returning bloggs')
         return bloggs;

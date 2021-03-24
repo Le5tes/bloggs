@@ -13,7 +13,7 @@ export const getBloggsRoutes = async () => {
 
   router.get('/', asyncHandler(controller.getBloggs));
 
-  router.post('/', checkSignIn, controller.postBlogg);
+  router.post('/', checkSignIn, asyncHandler(controller.postBlogg));
 
   return router;
 }

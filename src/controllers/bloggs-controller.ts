@@ -4,12 +4,12 @@ export class BloggsController {
     private logger = new Logger('BloggsController');
     constructor(private service) {}
 
-    postBlogg = (req, res) => {
+    postBlogg = async (req, res) => {
         this.logger.info('postBlogg')
 
         const username = req.session.user.username;
         const blogText = req.body.blog;
-        this.service.createBlogg(username, blogText);
+        await this.service.createBlogg(username, blogText);
 
         this.logger.info('blogg created')
         res.status(201).send();

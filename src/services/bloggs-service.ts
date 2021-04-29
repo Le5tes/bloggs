@@ -1,4 +1,5 @@
 import { DataMapper } from "@aws/dynamodb-data-mapper";
+import { bloggsTableOptions } from "../configs/bloggs-table-options";
 import { Blogg } from "../models/blogg";
 import { Logger } from "../utils/logger";
 
@@ -8,26 +9,7 @@ export class BloggsService {
     constructor(private datamapper: DataMapper) {}
 
     static async create(datamapper) {
-        const bloggTableOptions = {
-            readCapacityUnits: 5,
-            writeCapacityUnits: 5,
-            indexOptions: {
-                globalKey: {
-                    type: 'global',
-                    projection: 'all',
-                    readCapacityUnits: 5,
-                    writeCapacityUnits: 5,
-                },
-                username: {
-                    type: 'global',
-                    projection: 'all',
-                    readCapacityUnits: 5,
-                    writeCapacityUnits: 5,
-                }
-            }
-        }
-
-        await datamapper.ensureTableExists(Blogg,  bloggTableOptions);
+        await datamapper.ensureTableExists(Blogg,  bloggsTableOptions);
 
         return new BloggsService(datamapper);
     }

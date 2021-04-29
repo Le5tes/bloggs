@@ -30,14 +30,14 @@ describe('BloggsController', () => {
     });
 
     describe('postBlogg', () => {
-        it('should call the createBlogg method on the service with the username and blog text', () => {
-            controller.postBlogg(mockReq, mockRes);
+        it('should call the createBlogg method on the service with the username and blog text', async () => {
+            await controller.postBlogg(mockReq, mockRes);
 
             expect(service.createBlogg).toHaveBeenCalledWith(mockReq.session.user.username, mockReq.body.blog)
         });
 
-        it('should return 201 status', () => {
-            controller.postBlogg(mockReq, mockRes);
+        it('should return 201 status', async () => {
+            await controller.postBlogg(mockReq, mockRes);
 
             expect(mockRes.status).toHaveBeenCalledWith(201);
             expect(mockRes.send).toHaveBeenCalled();

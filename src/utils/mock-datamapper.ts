@@ -7,5 +7,5 @@ export const mockDataMapper = {
     get: () => mockAsyncIterator,
     query: () => mockAsyncIterator,
     put: () => mockAsyncIterator,
-    ensureTableExists: () => new Promise(res => res())
+    ensureTableExists: () => new Promise(res => res(true))
 };

@@ -13,7 +13,8 @@ export class ImagesController {
     }
 
     getUploadUrl = (req,res) => {
+        const preSignedUrl = this.service.getUploadUrl(req.query.filename);
 
-        res.status(200).send();
+        res.status(200).send({url: preSignedUrl});
     }
 }

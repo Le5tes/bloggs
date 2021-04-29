@@ -34,4 +34,12 @@ describe('ImagesController', () => {
       expect(service.getImageUrl).toHaveBeenCalledWith('file.jpg');
     });
   });
+
+  describe('getUploadUrl', () => {
+    it('should call the service for a presigned url', () => {
+      controller.getUploadUrl(mockReq, mockRes);
+
+      expect(service.getUploadUrl).toHaveBeenCalledWith('file.jpg');
+    });
+  });
 });

@@ -15,7 +15,7 @@ describe('/images', () => {
     describe('GET /images', () => {
         it('should be callable', async () => {
             const res = await app.get('/images');
-            expect(res.status).toEqual(301);
+            expect(res.status).toEqual(303);
         }, 10000);
     });
 

@@ -8,9 +8,9 @@ export class ImagesController {
 
     getImage = (req, res) => {
         const preSignedUrl = this.service.getImageUrl(req.query.filename);
-        
+
         res.set("Location", preSignedUrl);
-        res.status(301).send();
+        res.status(303).send();
     }
 
     getUploadUrl = (req,res) => {

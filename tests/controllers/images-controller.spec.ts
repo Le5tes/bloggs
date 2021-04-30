@@ -42,7 +42,7 @@ describe('ImagesController', () => {
 
     it('should set the signed url in the Location header and respond with 301 status', () => {
       expect(mockRes.set).toHaveBeenCalledWith('Location', signedUrl);
-      expect(mockRes.status).toHaveBeenCalledWith(301);
+      expect(mockRes.status).toHaveBeenCalledWith(303);
       expect(mockRes.send).toHaveBeenCalled();
     });
   });

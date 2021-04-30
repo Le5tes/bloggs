@@ -7,7 +7,7 @@ describe('ImagesService', () => {
     beforeEach(() => {
         s3 = {getSignedUrl: jest.fn()};
         s3.getSignedUrl.mockImplementation(() => signedUrl);
-        service = new ImagesService(s3);
+        service = new ImagesService(() => s3);
     });
 
     it('should be created', () => {

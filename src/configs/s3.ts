@@ -7,7 +7,7 @@ const getS3 = () => {
         //     accessKeyId: process.env.S3_ACCESS_KEY,
         //     secretAccessKey : process.env.S3_SECRET_KEY
         // };
-        // AWS.config.update({credentials: credentials, region: process.env.REGION});
+        AWS.config.update({region: process.env.REGION});
         return new AWS.S3();
     } else {
         return mockS3

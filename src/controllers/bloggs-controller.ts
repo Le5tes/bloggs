@@ -1,8 +1,9 @@
+import { BloggsService } from "../services/bloggs-service";
 import { Logger } from "../utils/logger";
 
 export class BloggsController {
     private logger = new Logger('BloggsController');
-    constructor(private service) {}
+    constructor(private service: BloggsService) {}
 
     postBlogg = async (req, res) => {
         this.logger.info('postBlogg')

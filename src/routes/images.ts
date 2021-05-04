@@ -10,9 +10,9 @@ export const getImagesRoutes = () => {
   var express = require('express');
   var router = express.Router();
 
-  router.get('/', controller.getImage);
+  router.get('/:filename', controller.getImage);
 
-  router.get('/uploadUrl', checkSignIn, controller.getUploadUrl);
+  router.get('/uploadUrl/:filename', checkSignIn, controller.getUploadUrl);
 
   return router;
 }

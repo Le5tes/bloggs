@@ -14,14 +14,14 @@ describe('/images', () => {
 
     describe('GET /images', () => {
         it('should be callable', async () => {
-            const res = await app.get('/images');
+            const res = await app.get('/images/file.jpg');
             expect(res.status).toEqual(303);
         }, 10000);
     });
 
     describe('GET /images/uploadUrl', () => {
         it('should be callable', async () => {
-            const res = await mockLoggedInApp('Tim').get('/images/uploadUrl');
+            const res = await mockLoggedInApp('Tim').get('/images/uploadUrl/file.jpg');
             expect(res.status).toEqual(200);
         }, 10000);
     });

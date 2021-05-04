@@ -15,7 +15,7 @@ describe('ImagesController', () => {
     controller = new ImagesController(service);
 
     mockReq = {
-      query: {filename: 'file.jpg'}
+      params: {filename: 'file.jpg'}
     }
 
     mockRes = {

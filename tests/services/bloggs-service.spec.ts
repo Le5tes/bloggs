@@ -24,7 +24,7 @@ describe('BloggsService', () => {
 
     describe('createBlogg', () => {
         it('should create a new blog', () => {
-            service.createBlogg('Bob', 'This is a blogggggggg');
+            service.createBlogg('Bob', 'This is a blogggggggg', 'tag');
 
             expect(datamapper.put).toHaveBeenCalled();
         });

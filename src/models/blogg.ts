@@ -14,6 +14,9 @@ export class Blogg {
     @attribute()
     body: string;
 
+    @attribute()
+    tags: string;
+
     @attribute({indexKeyConfigurations: {
         globalKey: 'HASH'
     }})

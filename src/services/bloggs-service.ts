@@ -14,11 +14,12 @@ export class BloggsService {
         return new BloggsService(datamapper);
     }
 
-    async createBlogg (username, blog) {
+    async createBlogg (username, blog, tags) {
         this.logger.info('creating blogg');
         const blogg = new Blogg();
         blogg.username = username;
         blogg.body = blog;
+        blogg.tags = tags;
 
         await this.datamapper.put(blogg);
         this.logger.info('blogg created');

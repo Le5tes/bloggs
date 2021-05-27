@@ -19,7 +19,10 @@ export const getApp = async () => {
   var app = express();
 
   // TODO set some cors
-  app.use(cors({origin: /lestes\.tech/}))
+  app.use(cors({
+    origin: /lestes\.tech/,
+    credentials: true
+  }))
 
   app.use(logger('dev'));
   app.use(express.json());

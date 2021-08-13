@@ -33,7 +33,7 @@ describe('BloggsController', () => {
         it('should call the createBlogg method on the service with the username and blog text', async () => {
             await controller.postBlogg(mockReq, mockRes);
 
-            expect(service.createBlogg).toHaveBeenCalledWith(mockReq.session.user.username, mockReq.body.blog, mockReq.body.tags)
+            expect(service.createBlogg).toHaveBeenCalledWith(mockReq.session.user.username, mockReq.body.body, mockReq.body.tags)
         });
 
         it('should return 201 status', async () => {

@@ -18,6 +18,11 @@ export class Blogg {
     tags: string;
 
     @attribute({indexKeyConfigurations: {
+        journey: 'HASH'
+    }})
+    journey: string;
+
+    @attribute({indexKeyConfigurations: {
         globalKey: 'HASH'
     }})
     globalKey: number = 0;

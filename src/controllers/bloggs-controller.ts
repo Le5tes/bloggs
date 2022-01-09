@@ -20,8 +20,14 @@ export class BloggsController {
     getBloggs = async (req, res) => {
         this.logger.info('getting bloggs')
 
-        const limit = req.query.limit || 1;
-        const bloggs = await this.service.getBloggs(limit);
+        let bloggs;
+        const journey = req.query.journey;
+        if (journey) {
+            bloggs = await this.service.getBloggsByJourney(journey);
+        } else {
+            const limit = req.query.limit || 1;
+            bloggs = await this.service.getBloggs(limit);
+        }
 
         this.logger.info('returning bloggs')
         res.status(200).send(bloggs);

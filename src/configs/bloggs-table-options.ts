@@ -8,7 +8,7 @@ export const bloggsTableOptions = {
             readCapacityUnits: 5,
             writeCapacityUnits: 5,
         },
-        username: {
+        journey: {
             type: 'global',
             projection: 'all',
             readCapacityUnits: 5,

@@ -40,4 +40,21 @@ export class BloggsService {
         this.logger.info('returning bloggs')
         return bloggs;
     }
+
+    async getBloggsByJourney (journey) {
+        this.logger.info('getting bloggs by journey');
+
+        const bloggs = []
+        try {
+            for await (const blogg of this.datamapper.query(Blogg, {journey: journey}, {indexName: 'journey',  scanIndexForward: false })) {
+                bloggs.push(blogg);
+            };
+        } catch (err) {
+            this.logger.error('failed to get bloggs', err)
+        }
+
+        this.logger.info('returning bloggs')
+        return bloggs;
+    }
+
 }

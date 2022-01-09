@@ -62,4 +62,37 @@ describe('BloggsService', () => {
             expect(response).toEqual(bloggs);
         });
     });
+
+    describe('getBloggsByJourney', () => {
+        let bloggs;
+
+        beforeEach(() => {
+            bloggs = [
+                {id: '1111', username: 'Tim', body: 'this is blog', journey: 'foo', createdAt: new Date()},
+                {id: '2222', username: 'Tim', body: 'this is blog', journey: 'foo', createdAt: new Date()},
+                {id: '3333', username: 'Tim', body: 'this is blog', journey: 'foo', createdAt: new Date()},
+            ];
+            datamapper.query.mockImplementation(() => {
+                return {
+                    [Symbol.asyncIterator]:  async function*() {
+                        yield bloggs[0];
+                        yield bloggs[1];
+                        yield bloggs[2];
+                    }
+                }
+            });
+        });
+
+        it('should make a call to retrieve the blogs from the datamapper', async() => {
+            await service.getBloggs('foo');
+
+            expect(datamapper.query).toHaveBeenCalled();
+        });
+
+        it('should return the retrieved blogs', async() => {
+            const response = await service.getBloggs();
+
+            expect(response).toEqual(bloggs);
+        });
+    });
 });

@@ -12,6 +12,7 @@ export const getBloggsRoutes = async () => {
   var router = express.Router();
 
   router.get('/', asyncHandler(controller.getBloggs));
+  router.get('/:id', asyncHandler(controller.getBloggById));
 
   router.post('/', checkSignIn, asyncHandler(controller.postBlogg));
 

@@ -41,6 +41,21 @@ export class BloggsService {
         return bloggs;
     }
 
+    async getBloggById(id) {
+        this.logger.info('retrieving blogg by id');
+
+        let blogg;
+
+        try {
+            blogg = await this.datamapper.get(Object.assign(new Blogg, {id}));
+        } catch (err) {
+            this.logger.error('failed to get blogg', err)
+        }
+
+        this.logger.info('returning blogg')
+        return blogg;
+    }
+
     async getBloggsByJourney (journey) {
         this.logger.info('getting bloggs by journey');
 

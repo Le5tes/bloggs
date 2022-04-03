@@ -18,7 +18,7 @@ export class BloggsController {
     }
 
     getBloggs = async (req, res) => {
-        this.logger.info('getting bloggs')
+        this.logger.info('getting bloggs');
 
         let bloggs;
         const journey = req.query.journey;
@@ -29,7 +29,17 @@ export class BloggsController {
             bloggs = await this.service.getBloggs(limit);
         }
 
-        this.logger.info('returning bloggs')
+        this.logger.info('returning bloggs');
         res.status(200).send(bloggs);
+    }
+
+    getBloggById = async (req, res) => {
+        this.logger.info('getting blogg by id');
+
+        const id = req.params.id
+
+        const blogg = await this.service.getBloggById(id);
+
+        res.status(200).send(blogg)
     }
 }

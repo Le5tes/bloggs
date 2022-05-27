@@ -60,7 +60,12 @@ export class BloggsService {
     async getBloggById (id) {
         this.logger.info('getting blogg by id');
 
-        const blogg = await this.datamapper.get(Object.assign(new Blogg(), {id}));
+        let blogg;
+        try {
+            blogg = await this.datamapper.get(Object.assign(new Blogg, {id}));
+        } catch (err) {
+            this.logger.error('failed to get blogg', err)
+        }
 
         this.logger.info('returning blogg');
         return blogg;

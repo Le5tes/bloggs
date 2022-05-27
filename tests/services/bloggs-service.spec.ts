@@ -1,7 +1,8 @@
 import { BloggsService } from "../../src/services/bloggs-service";
 import { Blogg } from "../../src/models/blogg";
-import { mockAsyncIterator } from "../../src/utils/mock-datamapper";
+// import { mockAsyncIterator } from "../../src/utils/mock-datamapper";
 import { bloggsTableOptions } from "../../src/configs/bloggs-table-options";
+import { SilentLogger } from "../utils/silent-logger";
 
 describe('BloggsService', () => {
     let service;
@@ -12,6 +13,7 @@ describe('BloggsService', () => {
         datamapper.ensureTableExists.mockImplementation(() => new Promise(res => res(true)));
 
         service = await BloggsService.create(datamapper);
+        service.logger = SilentLogger;
     });
 
     it('should be created', () => {
@@ -84,7 +86,7 @@ describe('BloggsService', () => {
         });
 
         it('should make a call to retrieve the blogs from the datamapper', async() => {
-            await service.getBloggs('foo');
+            await service.getBloggsByJourney('foo');
 
             expect(datamapper.query).toHaveBeenCalled();
         });
@@ -93,6 +95,33 @@ describe('BloggsService', () => {
             const response = await service.getBloggs();
 
             expect(response).toEqual(bloggs);
+        });
+    });
+
+    describe('getBloggById', () => {
+        let blogg;
+
+        beforeEach(() => {
+            blogg = {
+                id: '1111',
+                username: 'Tim',
+                body: 'this is blog',
+                journey: 'foo',
+                createdAt: new Date()
+            };
+            datamapper.get.mockImplementation(() => new Promise(res => res(blogg)));
+        });
+
+        it('should make a call to retrieve a blog from the datamapper', async() => {
+            await service.getBloggById("abc");
+
+            expect(datamapper.get).toHaveBeenCalled();
+        });
+
+        it('should return the retrieved blogs', async() => {
+            const response = await service.getBloggById("abc");
+
+            expect(response).toEqual(blogg);
         });
     });
 });

@@ -1,4 +1,5 @@
 import { BloggsController } from "../../src/controllers/bloggs-controller";
+import { SilentLogger } from "../utils/silent-logger";
 
 describe('BloggsController', () => {
     let controller;
@@ -8,13 +9,15 @@ describe('BloggsController', () => {
     let mockRes;
 
     beforeEach(() => {
-        service = {createBlogg: jest.fn(), getBloggs: jest.fn()};
+        service = {createBlogg: jest.fn(), getBloggs: jest.fn(), getBloggById: jest.fn()};
         controller = new BloggsController(service);
+        controller.logger = SilentLogger;
 
         mockReq = {
             body: {blog: 'This is an example blogg!', tags: 'blogg, stuff'},
             session: {user: {username: "Bob", passwordHash: "HASHHHHHH"}},
-            query: {}
+            query: {},
+            params: {}
         }
 
         mockRes = {
@@ -71,6 +74,27 @@ describe('BloggsController', () => {
 
             expect(mockRes.status).toHaveBeenCalledWith(200);
             expect(mockRes.send).toHaveBeenCalledWith(bloggs);
+        });
+    });
+
+    describe('getBloggById', () => {
+        it('should call the getBloggByID method on the service with the id passed in the url param', () => {
+            mockReq.params = {id: "abc"}
+            controller.getBloggById(mockReq, mockRes);
+
+            expect(service.getBloggById).toHaveBeenCalledWith(mockReq.params.id);
+        });
+
+
+        it('should send the returned blog with status 200', async () => {
+            const blogg = {id: 'abc', username: 'Tim', body: 'this is blog', createdAt: new Date()}
+            service.getBloggById.mockImplementation(() => Promise.resolve(blogg));
+
+            mockReq.params = {id: "abc"}
+            await controller.getBloggById(mockReq, mockRes);
+
+            expect(mockRes.status).toHaveBeenCalledWith(200);
+            expect(mockRes.send).toHaveBeenCalledWith(blogg);
         });
     });
 });

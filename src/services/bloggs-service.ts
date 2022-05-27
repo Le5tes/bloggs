@@ -4,7 +4,7 @@ import { Blogg } from "../models/blogg";
 import { Logger } from "../utils/logger";
 
 export class BloggsService {
-    private logger = new Logger('BloggsService');
+    logger = new Logger('BloggsService');
 
     constructor(private datamapper: DataMapper) {}
 
@@ -46,15 +46,24 @@ export class BloggsService {
 
         const bloggs = []
         try {
-            for await (const blogg of this.datamapper.query(Blogg, {journey: journey}, {indexName: 'journey',  scanIndexForward: false })) {
+            for await (const blogg of this.datamapper.query(Blogg, {journey}, {indexName: 'journey',  scanIndexForward: false })) {
                 bloggs.push(blogg);
             };
         } catch (err) {
             this.logger.error('failed to get bloggs', err)
         }
 
-        this.logger.info('returning bloggs')
+        this.logger.info('returning bloggs');
         return bloggs;
+    }
+
+    async getBloggById (id) {
+        this.logger.info('getting blogg by id');
+
+        const blogg = await this.datamapper.get(Object.assign(new Blogg(), {id}));
+
+        this.logger.info('returning blogg');
+        return blogg;
     }
 
 }

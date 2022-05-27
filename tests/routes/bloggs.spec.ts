@@ -17,6 +17,11 @@ describe('/bloggs', () => {
             const res = await app.get('/bloggs');
             expect(res.status).toEqual(200);
         }, 10000);
+
+        it('should be callable with url param', async () => {
+            const res = await app.get('/bloggs/123');
+            expect(res.status).toEqual(200);
+        }, 10000);
     });
 
     describe('POST /bloggs', () => {

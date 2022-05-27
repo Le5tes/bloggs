@@ -2,7 +2,7 @@ import { BloggsService } from "../services/bloggs-service";
 import { Logger } from "../utils/logger";
 
 export class BloggsController {
-    private logger = new Logger('BloggsController');
+    logger = new Logger('BloggsController');
     constructor(private service: BloggsService) {}
 
     postBlogg = async (req, res) => {
@@ -31,5 +31,14 @@ export class BloggsController {
 
         this.logger.info('returning bloggs')
         res.status(200).send(bloggs);
+    }
+
+    getBloggById = async(req, res) => {
+        this.logger.info('getting blogg by id')
+
+        const blogg = await this.service.getBloggById(req.params.id);
+
+        this.logger.info('returning blogg')
+        res.status(200).send(blogg);
     }
 }

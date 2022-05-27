@@ -2,6 +2,7 @@ import { DataMapper } from "@aws/dynamodb-data-mapper";
 import { bloggsTableOptions } from "../configs/bloggs-table-options";
 import { Blogg } from "../models/blogg";
 import { Logger } from "../utils/logger";
+var createError = require('http-errors');
 
 export class BloggsService {
     logger = new Logger('BloggsService');
@@ -33,12 +34,15 @@ export class BloggsService {
             for await (const blogg of this.datamapper.query(Blogg, {globalKey: 0}, {indexName: 'globalKey', limit: number, scanIndexForward: true })) {
                 bloggs.push(blogg);
             };
+
+
+            this.logger.info('returning bloggs')
+            return bloggs;
         } catch (err) {
             this.logger.error('failed to get bloggs', err)
+            throw createError(404, 'Bloggs not found');
         }
 
-        this.logger.info('returning bloggs')
-        return bloggs;
     }
 
     async getBloggsByJourney (journey) {
@@ -49,12 +53,14 @@ export class BloggsService {
             for await (const blogg of this.datamapper.query(Blogg, {journey}, {indexName: 'journey',  scanIndexForward: false })) {
                 bloggs.push(blogg);
             };
+
+            this.logger.info('returning bloggs');
+            return bloggs;
+
         } catch (err) {
             this.logger.error('failed to get bloggs', err)
+            throw createError(404, 'Bloggs not found');
         }
-
-        this.logger.info('returning bloggs');
-        return bloggs;
     }
 
     async getBloggById (id) {
@@ -62,13 +68,13 @@ export class BloggsService {
 
         let blogg;
         try {
-            blogg = await this.datamapper.get(Object.assign(new Blogg, {id}));
+            blogg = await this.datamapper.get(Object.assign(new Blogg, {id, createdAt: undefined}));
+
+            this.logger.info('returning blogg');
+            return blogg;
         } catch (err) {
             this.logger.error('failed to get blogg', err)
+            throw createError(404, 'Blogg not found');
         }
-
-        this.logger.info('returning blogg');
-        return blogg;
     }
-
 }

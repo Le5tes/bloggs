@@ -68,7 +68,9 @@ export class BloggsService {
 
         let blogg;
         try {
-            blogg = await this.datamapper.get(Object.assign(new Blogg, {id, createdAt: undefined}));
+            for await (const b of this.datamapper.query(Blogg, {id})) {
+                blogg = b;
+            };
 
             this.logger.info('returning blogg');
             return blogg;

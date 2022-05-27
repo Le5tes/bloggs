@@ -109,13 +109,19 @@ describe('BloggsService', () => {
                 journey: 'foo',
                 createdAt: new Date()
             };
-            datamapper.get.mockImplementation(() => new Promise(res => res(blogg)));
+            datamapper.query.mockImplementation(() => {
+                return {
+                    [Symbol.asyncIterator]:  async function*() {
+                        yield blogg;
+                    }
+                }
+            });
         });
 
         it('should make a call to retrieve a blog from the datamapper', async() => {
             await service.getBloggById("abc");
 
-            expect(datamapper.get).toHaveBeenCalled();
+            expect(datamapper.query).toHaveBeenCalled();
         });
 
         it('should return the retrieved blogs', async() => {

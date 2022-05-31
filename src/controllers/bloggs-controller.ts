@@ -9,9 +9,12 @@ export class BloggsController {
         this.logger.info('postBlogg')
 
         const username = req.session.user.username;
+        const title = req.body.title;
         const blogText = req.body.body;
+        const description = req.body.description;
         const tags = req.body.tags;
-        await this.service.createBlogg(username, blogText, tags);
+        const image = req.body.image;
+        await this.service.createBlogg(username, blogText, tags, title, description, image);
 
         this.logger.info('blogg created')
         res.status(201).send();

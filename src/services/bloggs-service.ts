@@ -15,12 +15,15 @@ export class BloggsService {
         return new BloggsService(datamapper);
     }
 
-    async createBlogg (username, blog, tags) {
+    async createBlogg (username, blog, tags, title, description, image) {
         this.logger.info('creating blogg');
         const blogg = new Blogg();
         blogg.username = username;
         blogg.body = blog;
         blogg.tags = tags;
+        blogg.title = title;
+        blogg.description = description;
+        blogg.image = image;
 
         await this.datamapper.put(blogg);
         this.logger.info('blogg created');

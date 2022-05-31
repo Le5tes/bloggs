@@ -17,6 +17,15 @@ export class Blogg {
     @attribute()
     tags: string;
 
+    @attribute()
+    title: string;
+
+    @attribute()
+    description: string;
+
+    @attribute()
+    image: string;
+
     @attribute({indexKeyConfigurations: {
         journey: 'HASH'
     }})

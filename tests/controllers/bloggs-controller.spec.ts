@@ -14,7 +14,7 @@ describe('BloggsController', () => {
         controller.logger = SilentLogger;
 
         mockReq = {
-            body: {blog: 'This is an example blogg!', tags: 'blogg, stuff'},
+            body: {blog: 'This is an example blogg!', tags: 'blogg, stuff', title: 'title', description: 'descirpt', image: 'imgurl'},
             session: {user: {username: "Bob", passwordHash: "HASHHHHHH"}},
             query: {},
             params: {}
@@ -36,7 +36,14 @@ describe('BloggsController', () => {
         it('should call the createBlogg method on the service with the username and blog text', async () => {
             await controller.postBlogg(mockReq, mockRes);
 
-            expect(service.createBlogg).toHaveBeenCalledWith(mockReq.session.user.username, mockReq.body.body, mockReq.body.tags)
+            expect(service.createBlogg).toHaveBeenCalledWith(
+                mockReq.session.user.username,
+                mockReq.body.body,
+                mockReq.body.tags,
+                mockReq.body.title,
+                mockReq.body.description,
+                mockReq.body.image
+            )
         });
 
         it('should return 201 status', async () => {

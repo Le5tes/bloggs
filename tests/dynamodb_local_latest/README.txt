@@ -6,6 +6,67 @@ For an overview of DynamoDB Local please refer to the documentation at http://do
 
 Release Notes
 -----------------------------
+2022-9-12 (1.20.0)
+
+* Fixed path traversal issue
+* Updated Jetty dependency to 9.4.48.v20220622
+* Added M1 support
+
+2022-7-27 (1.19.0)
+
+ * Updated  IonSQLSandbox dependency to version 6.x
+ * Updated  KotlinStdlib dependency to version 1.6.x
+
+2022-1-10 (1.18.0)
+
+ * Updated log4j-core dependency to version 2.17.1.
+ * Updated Jackson-core and related libraries from 2.10.x to 2.12.0
+
+2021-12-16 (1.17.2)
+
+ * Updated log4j-core dependency to version 2.16.
+
+2021-12-10 (1.17.1)
+
+ * Updated log4j-core dependency to patch zero-day exploit to prevent remote code execution - Log4Shell: RCE 0-day. Applied internal patch for 2.13.3 for log4j-core by removing JndiLookup class.
+
+2021-10-08 (1.17.0)
+
+ * Update the AWS SDK dependency to AWS SDK for Java 1.12.x
+ * Update License.txt file
+ * Deprecated Javascript Web Shell
+
+2021-05-03 (1.16.0)
+
+ * Improve the performance of DynamoDbLocal by reducing buffer size to 1KB from 16MB which reduces overall heap memory usage
+ * Add a CORS header to DynamoDB local API responses in the case of error responses, which solves the issue of returning generic ResourceNotFoundException for all errors
+ * Add support for AWS SDK for Java 2.0
+ * Fix wording of the exception messages shown when incorrect attribute definitions are passed in the create table command
+2021-02-08 (1.15.0)
+
+  * Add support for PartiQL Select, Update, Insert, Delete Statements
+  * Add support for batch reads and writes using PartiQL
+  * Add support for transactional reads or writes using PartiQL
+  * Fix the shardIterator format to keep the streamArn as part one and serial number as part two to sync with DynamoDB Streams
+  * Update the Jackson library dependency from 2.6 to 2.10
+  * Fix the error structure difference for message key name in TransactionCanceledException
+  * Suppress “Logging initialized” log message shown at server startup
+
+2020-12-21 (1.13.6)
+
+  * Fix the XSS security issue in the DynamoDB JavaScript shell by sanitizing the input and output data
+  * Add the log4j-core library dependency with the version update from 2.8 to 2.13.3
+  * Fix the describe-stream CLI for the option, —exclusive-start-shard-id, to return basic streaminfo instead of RESOURCE_NOT_FOUND, if the requested shard-id does not match
+  * Fix GSI input to not mutate while creating a table with billing mode set to PAY_PER_REQUEST
+  * Update the Jetty library dependency version to 9.4.18.v20190429
+
+2020-10-13 (1.13.5)
+
+  * Align error message with Amazon DynamoDB service for empty sets attributes, empty value attributes, and when invalid BETWEEN condition operator range is given
+  * Update log4j-api library dependency version to 2.13.3
+  * Remove dependency on log4j-core 2.6.2
+  * Provide support for multi-arch docker images with arm64 and amd64 architectures
+
 2020-09-14 (1.13.4)
 
   * Fixes an issue where the “begins_with” conditional function was not working correctly with Binary types for Java versions 9 and later.
